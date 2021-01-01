@@ -4,10 +4,14 @@
  * https://github.com/kubamarkiewicz/raspberry-rotary-switch
  */
 
+const Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+const fs = require('fs');
+const Omx = require('node-omxplayer');
 
-const { exec } = require('child_process');
 
-var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+const directory = '/home/pi/Desktop/instalacja/playlist';
+
+
 var switch1 = new Gpio(17, 'in', 'rising'); //use GPIO pin 17 as input, button presses should be handled
 var switch2 = new Gpio(27, 'in', 'rising'); 
 var switch3 = new Gpio(22, 'in', 'rising');
@@ -24,21 +28,21 @@ var switch12 = new Gpio(21, 'in', 'rising');
 var lastSwitch = 0;
 
 
-switch1.watch(function (err, value) { return pressHandler(err, value, 1); });
-switch2.watch(function (err, value) { return pressHandler(err, value, 2); });
-switch3.watch(function (err, value) { return pressHandler(err, value, 3); });
-switch4.watch(function (err, value) { return pressHandler(err, value, 4); });
-switch5.watch(function (err, value) { return pressHandler(err, value, 5); });
-switch6.watch(function (err, value) { return pressHandler(err, value, 6); });
-switch7.watch(function (err, value) { return pressHandler(err, value, 7); });
-switch8.watch(function (err, value) { return pressHandler(err, value, 8); });
-switch9.watch(function (err, value) { return pressHandler(err, value, 9); });
-switch10.watch(function (err, value) { return pressHandler(err, value, 10); });
-switch11.watch(function (err, value) { return pressHandler(err, value, 11); });
-switch12.watch(function (err, value) { return pressHandler(err, value, 12); });
+switch1.watch(function (err, value) { return switchHandler(err, value, 1); });
+switch2.watch(function (err, value) { return switchHandler(err, value, 2); });
+switch3.watch(function (err, value) { return switchHandler(err, value, 3); });
+switch4.watch(function (err, value) { return switchHandler(err, value, 4); });
+switch5.watch(function (err, value) { return switchHandler(err, value, 5); });
+switch6.watch(function (err, value) { return switchHandler(err, value, 6); });
+switch7.watch(function (err, value) { return switchHandler(err, value, 7); });
+switch8.watch(function (err, value) { return switchHandler(err, value, 8); });
+switch9.watch(function (err, value) { return switchHandler(err, value, 9); });
+switch10.watch(function (err, value) { return switchHandler(err, value, 10); });
+switch11.watch(function (err, value) { return switchHandler(err, value, 11); });
+switch12.watch(function (err, value) { return switchHandler(err, value, 12); });
 
 
-function pressHandler(err, value, switchNumber) {
+function switchHandler(err, value, switchNumber) {
   if (err) { //if an error
     console.error('There was an error', err); //output error message to console
   return;
@@ -87,9 +91,6 @@ function changeSwitch(switchNumber) {
 
 
 // read files from directory
-const directory = '/home/pi/Desktop/instalacja/playlist';
-
-const fs = require('fs');
 var files = [];
 var currentFileIndex = 0;
 
@@ -100,6 +101,10 @@ console.log('Videos in \'playlist\':', files.length);
 
 // play first file
 next();
+
+
+// Create an instance of the player
+var player = Omx();
 
 
 function prev() {
@@ -122,12 +127,8 @@ function next() {
 
 
 function playFile(fileIndex) {
-  console.log('Play file:', fileIndex, files[fileIndex]);
+  console.log('play ', fileIndex);
   if (files[fileIndex]) {
-    // open in omxplayer
-    exec('killall "omxplayer.bin"');
-    exec('omxplayer --loop --no-osd ' + directory + '/' + files[fileIndex]);
-    // open in vlc
-    //exec('vlc --fullscreen --repeat --no-video-title ../playlist/' + files[fileIndex]);
+    player.newSource(directory + '/' + files[fileIndex]);
   }
 }
