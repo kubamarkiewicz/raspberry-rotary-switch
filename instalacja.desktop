@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Instalacja
+Exec=node /home/pi/Desktop/instalacja/app/app.js

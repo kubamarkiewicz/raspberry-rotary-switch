@@ -1,0 +1,19 @@
+Jak podłączyć wyłącznik obrotowy
+- podłącz środkowy kabel (czerwony) do pinu 1 (3V)
+- podłącz pozostałe kable w kolejności do pinów tak jak w kodzie
+
+Instalacja
+Skopiuj pliki do katalogu: /home/pi/Desktop/instalacja
+Uruchom plik install.sh
+
+Jak otworzyc
+Urucho plik start.sh
+
+Jak zamknac aplikacje
+Nacisnac crtl+c
+
+Autostart
+Skopiuj plik instalacja.desktop do katalogu /home/pi/.config/autostart
+Uwaga: nie da się go potem zamknąć, jedynie usuwając plik .desktop przez VNC i restartując pi
+
+sudo shutdown -r now
