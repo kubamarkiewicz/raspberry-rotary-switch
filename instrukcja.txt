@@ -5,6 +5,7 @@ Jak podłączyć wyłącznik obrotowy
 Instalacja
 Skopiuj pliki do katalogu: /home/pi/Desktop/instalacja
 Uruchom plik install.sh
+Umieść pliki video w katalogu 'playlist'. Będą odtwarzane w kolejności alfabetycznej.
 
 Jak otworzyc
 Urucho plik start.sh

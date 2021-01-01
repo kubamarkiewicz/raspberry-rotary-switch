@@ -1,3 +1,9 @@
+/**
+ * raspberry-rotary-switch 
+ *
+ * https://github.com/kubamarkiewicz/raspberry-rotary-switch
+ */
+
 
 const { exec } = require('child_process');
 
@@ -80,21 +86,17 @@ function changeSwitch(switchNumber) {
 
 
 
-// read files from folder
+// read files from directory
+const directory = '/home/pi/Desktop/instalacja/playlist';
+
+const fs = require('fs');
 var files = [];
 var currentFileIndex = 0;
 
-
-
-
-const directory = '/home/pi/Desktop/instalacja/playlist';
-const fs = require('fs');
-
 fs.readdirSync(directory).forEach(file => {
-      files.push(file);
+  files.push(file);
 });
-console.log('Files in \'playlist\' folder:', files.length);
-console.log('press the button'); 
+console.log('Videos in \'playlist\':', files.length);
 
 // play first file
 next();
